@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router";
 import { Menu } from "lucide-react";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "./ui/sheet";
 import { Wordmark } from "./wordmark";
-import { generalWhatsapp } from "../../config/contact";
+import { generalWhatsapp, sisterHouses } from "../../config/contact";
 
 const NAV = [
   { label: "The Collection", to: "/collection" },
@@ -134,6 +134,28 @@ export function SiteHeader() {
                       </Link>
                     ))}
                   </nav>
+
+                  <div className="mt-auto">
+                    <div className="hairline mb-6" />
+                    <div className="text-[0.62rem] uppercase tracking-[0.16em] text-[var(--text-muted)]">
+                      Under one roof
+                    </div>
+                    <ul className="mt-4 space-y-3">
+                      {sisterHouses("menu").map((h) => (
+                        <li key={h.id}>
+                          <a
+                            href={h.url}
+                            onClick={() => setMenuOpen(false)}
+                            className="block py-1 text-[var(--text-body)] outline-none focus-visible:outline-solid focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
+                          >
+                            <span style={{ fontFamily: "var(--typeface-serif)" }}>{h.name}</span>
+                            <span className="ml-1.5" aria-hidden>↗</span>
+                            <span className="block text-[0.72rem] text-[var(--text-muted)]">{h.trade}</span>
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
               </SheetContent>
             </Sheet>

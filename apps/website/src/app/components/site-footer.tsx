@@ -11,6 +11,7 @@ import {
   INSTAGRAM_URL,
   FACEBOOK_URL,
   YOUTUBE_URL,
+  sisterHouses,
 } from "../../config/contact";
 
 const CHANNELS = [
@@ -24,7 +25,7 @@ export function SiteFooter() {
   return (
     <footer className="bg-[var(--surface-page)] text-[var(--text-primary)]">
       <div className="mx-auto max-w-[1240px] px-6 lg:px-10">
-        <div className="grid gap-14 border-b border-cream/12 py-16 md:grid-cols-[1.2fr_1fr_1fr] md:py-20">
+        <div className="grid gap-14 border-b border-cream/12 py-16 md:grid-cols-2 lg:grid-cols-[1.2fr_1fr_1fr_1fr] md:py-20">
           <div>
             <Wordmark size="foot" tone="light" />
             <p
@@ -75,6 +76,29 @@ export function SiteFooter() {
                 </a>
               ))}
             </div>
+          </div>
+
+          <div>
+            <div className="text-[0.66rem] uppercase tracking-[0.16em] text-cream/50">
+              Under one roof
+            </div>
+            <ul className="mt-5 space-y-3.5">
+              {sisterHouses("footer").map((h) => (
+                <li key={h.id}>
+                  <a
+                    href={h.url}
+                    target="_blank"
+                    rel="noopener"
+                    className="group block text-cream/82 outline-none transition-colors hover:text-[var(--text-primary)] focus-visible:outline-solid focus-visible:outline-1 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
+                  >
+                    <span style={{ fontFamily: "var(--typeface-serif)" }}>{h.name}</span>
+                    <span className="ml-1.5 inline-block transition-transform group-hover:translate-x-0.5 motion-reduce:group-hover:translate-x-0" aria-hidden>↗</span>
+                    <span className="block text-[0.78rem] text-cream/60">{h.trade}</span>
+                    <span className="sr-only"> (opens in a new tab)</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
 

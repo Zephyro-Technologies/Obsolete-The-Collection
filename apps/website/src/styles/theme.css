@@ -254,4 +254,63 @@
   @media (prefers-reduced-motion: reduce) {
     .sheen::after { display: none; }
   }
+
+  /* A sister house's wordmark (components/sister-houses.tsx). The logo is a MASK,
+     so this element's fill, and its ::after, show only inside the letters.
+
+     Rest: cream at 58%, dim enough that arriving at platinum is a visible step.
+     The glint is the ::after: a band of full cream, 28% of the mark wide, run
+     once across it on an ease-in-out curve the eye can follow (an ease-out
+     spends its travel in the first quarter and reads as a flash). It never runs
+     backwards: when the pointer leaves, the animation is simply removed and the
+     band is gone, while the fill fades back. Hover is guarded by (hover:hover)
+     so a tap on a phone cannot leave a mark stuck half-hovered; a phone gets
+     the same glint once, as the row scrolls in (.is-playing), and an instant
+     platinum under the finger (:active). */
+  .house-mark {
+    position: relative;
+    overflow: hidden;
+    background-color: color-mix(in srgb, var(--cream) 58%, transparent);
+    transition: background-color 220ms ease-out;
+  }
+  .house-mark::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(105deg, transparent 36%, var(--cream) 50%, transparent 64%);
+    opacity: 0;
+  }
+  @keyframes house-glint {
+    from { transform: translateX(-100%); opacity: 1; }
+    to   { transform: translateX(100%);  opacity: 1; }
+  }
+  /* Same motion under a second name: switching names is what restarts it. */
+  @keyframes house-glint-hover {
+    from { transform: translateX(-100%); opacity: 1; }
+    to   { transform: translateX(100%);  opacity: 1; }
+  }
+  .house-mark.is-playing::after {
+    animation: house-glint 900ms cubic-bezier(0.45, 0, 0.2, 1) var(--glint-delay, 0ms) both;
+  }
+  @media (hover: hover) {
+    .group:hover .house-mark {
+      background-color: var(--platinum);
+      transition-duration: 300ms;
+    }
+    .group:hover .house-mark::after {
+      animation: house-glint-hover 650ms cubic-bezier(0.45, 0, 0.2, 1) both;
+    }
+  }
+  .group:focus-visible .house-mark { background-color: var(--platinum); }
+  .group:focus-visible .house-mark::after {
+    animation: house-glint-hover 650ms cubic-bezier(0.45, 0, 0.2, 1) both;
+  }
+  .group:active .house-mark {
+    background-color: var(--platinum);
+    transition-duration: 0ms;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .house-mark::after { display: none; }
+  }
 }

@@ -60,3 +60,57 @@ export function reservedCarMessage(car: Car): string {
     car,
   )} is currently reserved. I'd like to register my interest and be notified if it becomes available.`;
 }
+
+// --- Sister houses -----------------------------------------------------------
+// The three businesses that share The Collection's building in F-6. Every link to
+// them (landing row, footer, mobile menu) reads from this list.
+//
+// Each URL carries UTM tags so the sister sites can see, in their own analytics,
+// how many visitors The Collection sent them and from which spot on the page.
+
+export interface SisterHouse {
+  /** Stable key: the landing page looks the wordmark up by this, never by name. */
+  id: "studio" | "performance" | "bazaar";
+  name: string;
+  /** What it is, in a few plain words: shown under the name everywhere. */
+  trade: string;
+  url: string;
+}
+
+const utmTagged = (url: string, placement: string) => {
+  const u = new URL(url);
+  u.searchParams.set("utm_source", "thecollection");
+  u.searchParams.set("utm_medium", "referral");
+  u.searchParams.set("utm_campaign", "sister_houses");
+  u.searchParams.set("utm_content", placement);
+  return u.toString();
+};
+
+// Every claim here matches the house's own site (checked 2026-10-07). Keep it
+// that way: 360 sells parts and does NOT fit or tune, and The Bazaar buys cars
+// outright but does NOT take part-exchange, so neither may be promised here.
+const SISTER_HOUSES: (Omit<SisterHouse, "url"> & { href: string })[] = [
+  {
+    id: "studio",
+    name: "The Studio",
+    trade: "Paint protection and detailing",
+    href: "https://thestudioisb.com/",
+  },
+  {
+    id: "performance",
+    name: "360 Performance",
+    trade: "Genuine performance parts",
+    href: "https://www.360performance.shop/",
+  },
+  {
+    id: "bazaar",
+    name: "The Bazaar",
+    trade: "Everyday cars, bought, sold and imported",
+    href: "https://thebazaar.com.pk/",
+  },
+];
+
+/** The sister houses, with links tagged for where on the site they are shown. */
+export function sisterHouses(placement: "hero" | "band" | "footer" | "menu"): SisterHouse[] {
+  return SISTER_HOUSES.map(({ href, ...h }) => ({ ...h, url: utmTagged(href, placement) }));
+}

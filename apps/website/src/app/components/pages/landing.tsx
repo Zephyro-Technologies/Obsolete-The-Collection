@@ -16,6 +16,7 @@ import houseImg from "../../../assets/house.jpg";
 import ethosImg from "../../../assets/ethos.jpg";
 import featuredImg from "../../../assets/featured.jpg";
 import { useDocumentTitle } from "../../hooks/use-document-title";
+import { SisterHousesBand, SisterHousesHero } from "../sister-houses";
 
 // TODO (client content): the images below are self-hosted placeholder stock photos
 // (Unsplash, see ATTRIBUTIONS.md). Replace with real, licensed photography of the
@@ -489,14 +490,11 @@ export function Landing() {
   const featured = cars.filter((c) => c.featured);
   const marques = Array.from(new Set(cars.map((c) => c.make)));
   useDocumentTitle("The Collection · Private Luxury Motorcars, Islamabad · By Appointment");
-  // Fade the scroll cue away once the visitor has begun to scroll.
-  const { scrollY } = useScroll();
-  const cueOpacity = useTransform(scrollY, [0, 160], [1, 0]);
 
   return (
     <div className="bg-[var(--surface-page)]">
       {/* ---------------------------------------------------------------- Hero */}
-      <section className="relative h-[100svh] min-h-[600px] w-full overflow-hidden">
+      <section className="relative flex min-h-[max(100svh,600px)] w-full flex-col overflow-hidden">
         <motion.div
           className="absolute inset-0"
           initial={reduce ? false : { scale: 1.08, opacity: 0 }}
@@ -516,7 +514,10 @@ export function Landing() {
               1. an elliptical pool of onyx sitting exactly under the text column —
                  deep at the centre, gone by the frame's edge;
               2. a light vertical wash: enough at the top for the header, enough at
-                 the foot for the scroll cue, almost nothing across the middle.
+                 the foot for the sister-houses row, almost nothing across the
+                 middle. The foot starts darkening at 58%, not 62%, and ends at
+                 86%, because that row is taller than the scroll cue it replaced
+                 and its small type sits over the bright GT-R and floor.
 
               vmax, not %, on the pool's horizontal radius. A percentage resolves
               against the BOX WIDTH, so on a phone the pool collapsed to ~273px while
@@ -535,13 +536,13 @@ export function Landing() {
             style={{
               background: [
                 "radial-gradient(ellipse 70vmax 58% at 50% 46%, color-mix(in srgb, var(--onyx) 72%, transparent) 0%, color-mix(in srgb, var(--onyx) 58%, transparent) 45%, color-mix(in srgb, var(--onyx) 20%, transparent) 78%, transparent 100%)",
-                "linear-gradient(to bottom, color-mix(in srgb, var(--onyx) 55%, transparent) 0%, color-mix(in srgb, var(--onyx) 18%, transparent) 32%, color-mix(in srgb, var(--onyx) 22%, transparent) 62%, color-mix(in srgb, var(--onyx) 78%, transparent) 100%)",
+                "linear-gradient(to bottom, color-mix(in srgb, var(--onyx) 55%, transparent) 0%, color-mix(in srgb, var(--onyx) 18%, transparent) 32%, color-mix(in srgb, var(--onyx) 22%, transparent) 58%, color-mix(in srgb, var(--onyx) 86%, transparent) 100%)",
               ].join(", "),
             }}
           />
         </motion.div>
 
-        <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">
+        <div className="relative z-10 flex flex-1 flex-col items-center justify-center px-6 pt-28 pb-12 text-center md:pt-24">
           <h1 className="sr-only">The Collection, a private luxury car dealership in Islamabad, by appointment</h1>
           <motion.div
             initial={reduce ? false : { opacity: 0, y: 16 }}
@@ -575,20 +576,15 @@ export function Landing() {
           </motion.div>
         </div>
 
-        {/* Animated scroll cue — fades away once the visitor scrolls */}
-        <motion.div
-          className="absolute inset-x-0 bottom-8 z-10 flex flex-col items-center gap-3"
-          style={{ opacity: reduce ? undefined : cueOpacity }}
-        >
-          <span className="text-[0.6rem] uppercase tracking-[0.3em] text-cream/60">Scroll</span>
-          <motion.span
-            className="block h-8 w-px bg-cream/40"
-            style={{ transformOrigin: "top" }}
-            animate={reduce ? undefined : { scaleY: [0.3, 1, 0.3], opacity: [0.3, 0.9, 0.3] }}
-            transition={{ duration: 2.2, ease: "easeInOut", repeat: Infinity }}
-          />
-        </motion.div>
+        {/* Sister houses, along the hero's foot (desktop and tablet). It
+            arrives after the hero copy so The Collection's wordmark lands
+            first. In the flow, not absolute, so a short window grows the
+            section rather than pushing the row into the CTA. A phone has no
+            room for it here: it gets SisterHousesBand, just below. */}
+        <SisterHousesHero className="hidden md:block" />
       </section>
+
+      <SisterHousesBand className="md:hidden" />
 
       {/* ---------------------------------------------------- Marque marquee */}
       {marques.length > 0 && (

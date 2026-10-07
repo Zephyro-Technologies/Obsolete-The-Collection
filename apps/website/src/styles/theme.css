@@ -258,7 +258,8 @@
   /* A sister house's wordmark (components/sister-houses.tsx). The logo is a MASK,
      so this element's fill, and its ::after, show only inside the letters.
 
-     Rest: cream at 58%, dim enough that arriving at platinum is a visible step.
+     Rest: cream at 80%, bright enough to be seen on arrival; hover settles in
+     platinum.
      The glint is the ::after: a band of full cream, 28% of the mark wide, run
      once across it on an ease-in-out curve the eye can follow (an ease-out
      spends its travel in the first quarter and reads as a flash). It never runs
@@ -270,7 +271,7 @@
   .house-mark {
     position: relative;
     overflow: hidden;
-    background-color: color-mix(in srgb, var(--cream) 58%, transparent);
+    background-color: color-mix(in srgb, var(--cream) 80%, transparent);
     transition: background-color 220ms ease-out;
   }
   .house-mark::after {

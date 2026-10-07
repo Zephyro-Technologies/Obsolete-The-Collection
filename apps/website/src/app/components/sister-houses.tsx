@@ -10,12 +10,12 @@ import bazaarLogo from "../../assets/sisters/the-bazaar.png";
 // colour: each is used as a MASK over a token fill (`.house-mark` in theme.css),
 // so the row is cream at rest and platinum on hover like everything else here,
 // instead of three brand palettes (360's red) fighting the hero. Heights are set
-// by eye so the three read as one optical size, not one pixel size; 360 sits a
-// step smaller because its solid box carries more ink than the other two.
+// by eye so the three read as one optical size, not one pixel size. They are
+// sized to be noticed, not whispered: the row's job is to send visitors next door.
 const LOGOS: Record<SisterHouse["id"], { src: string; ratio: number; hero: string; band: string }> = {
-  studio: { src: studioLogo, ratio: 810.838 / 93.08, hero: "h-[13px] lg:h-[15px]", band: "h-[14px]" },
-  performance: { src: performanceLogo, ratio: 1600 / 244, hero: "h-[14px] lg:h-[16px]", band: "h-[15px]" },
-  bazaar: { src: bazaarLogo, ratio: 918 / 135, hero: "h-[16px] lg:h-[19px]", band: "h-[17px]" },
+  studio: { src: studioLogo, ratio: 810.838 / 93.08, hero: "h-[18px] lg:h-[21px]", band: "h-[17px]" },
+  performance: { src: performanceLogo, ratio: 1600 / 244, hero: "h-[20px] lg:h-[23px]", band: "h-[19px]" },
+  bazaar: { src: bazaarLogo, ratio: 918 / 135, hero: "h-[22px] lg:h-[26px]", band: "h-[21px]" },
 };
 
 // Staggered once-only glint: when the row first comes into view, light runs
@@ -141,7 +141,7 @@ export function SisterHousesHero({ className = "" }: { className?: string }) {
                 {/* A fixed, full-width slot, so the three lines below share a
                     baseline whatever each wordmark's height, and a wordmark can
                     never grow past its column. */}
-                <span className="flex h-[19px] w-full items-center justify-center">
+                <span className="flex h-[22px] w-full items-center justify-center lg:h-[26px]">
                   <Mark house={h} size="hero" align="center" playing={playing} index={i} onGlintEnd={onGlintEnd} />
                 </span>
                 <span
@@ -150,7 +150,7 @@ export function SisterHousesHero({ className = "" }: { className?: string }) {
                 />
                 <span
                   aria-hidden
-                  className="mt-2.5 block text-[0.75rem] leading-snug text-cream/72 transition-colors duration-300 group-hover:text-cream/92"
+                  className="mt-3 block text-[0.82rem] leading-snug text-cream/82 transition-colors duration-300 group-hover:text-[var(--text-primary)]"
                 >
                   {h.trade}
                 </span>
@@ -158,7 +158,7 @@ export function SisterHousesHero({ className = "" }: { className?: string }) {
                     alone reads as decoration. */}
                 <span
                   aria-hidden
-                  className="mt-2 inline-flex items-center gap-1 text-[0.62rem] uppercase tracking-[0.18em] text-cream/65 transition-colors duration-300 group-hover:text-[var(--accent)]"
+                  className="mt-2 inline-flex items-center gap-1 text-[0.68rem] uppercase tracking-[0.18em] text-cream/78 transition-colors duration-300 group-hover:text-[var(--accent)]"
                 >
                   Visit
                   <ArrowUpRight className="size-3 shrink-0 transition-[translate] duration-300 ease-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transition-none" />
@@ -184,7 +184,7 @@ export function SisterHousesBand({ className = "" }: { className?: string }) {
   const ref = useRef<HTMLUListElement>(null);
   const { playing, onGlintEnd } = useIntroGlint(ref, 150);
   return (
-    <nav aria-label="Our sister houses" className={`bg-[var(--surface-deep)] px-6 pt-10 pb-8 ${className}`}>
+    <nav aria-label="Our sister houses" className={`bg-[var(--surface-deep)] px-6 pt-6 pb-8 ${className}`}>
       <Label />
       <ul ref={ref} className="mt-4 divide-y divide-cream/10 border-y border-cream/10">
         {sisterHouses("band").map((h, i) => (
@@ -197,16 +197,16 @@ export function SisterHousesBand({ className = "" }: { className?: string }) {
               className={`group flex min-h-16 items-center gap-4 py-4 transition-colors duration-150 active:bg-cream/[0.06] ${FOCUS}`}
             >
               <span className="min-w-0 flex-1">
-                <span className="flex h-[17px] w-full items-center">
+                <span className="flex h-[21px] w-full items-center">
                   <Mark house={h} size="band" align="left" playing={playing} index={i} onGlintEnd={onGlintEnd} />
                 </span>
-                <span aria-hidden className="mt-2 block text-[0.85rem] leading-snug text-cream/75">
+                <span aria-hidden className="mt-2 block text-[0.88rem] leading-snug text-cream/82">
                   {h.trade}
                 </span>
               </span>
               <span
                 aria-hidden
-                className="inline-flex shrink-0 items-center gap-1 text-[0.66rem] uppercase tracking-[0.18em] text-cream/70 transition-colors duration-150 group-active:text-[var(--accent)]"
+                className="inline-flex shrink-0 items-center gap-1 text-[0.7rem] uppercase tracking-[0.18em] text-cream/80 transition-colors duration-150 group-active:text-[var(--accent)]"
               >
                 Visit
                 <ArrowUpRight className="size-3.5" />

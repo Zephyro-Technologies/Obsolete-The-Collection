@@ -494,7 +494,9 @@ export function Landing() {
   return (
     <div className="bg-[var(--surface-page)]">
       {/* ---------------------------------------------------------------- Hero */}
-      <section className="relative flex min-h-[max(100svh,600px)] w-full flex-col overflow-hidden">
+      {/* On a phone the hero stops at 85% of the screen, so the sister-houses
+          band below peeks in at the bottom on arrival and invites the scroll. */}
+      <section className="relative flex min-h-[max(85svh,560px)] w-full flex-col overflow-hidden md:min-h-[max(100svh,600px)]">
         <motion.div
           className="absolute inset-0"
           initial={reduce ? false : { scale: 1.08, opacity: 0 }}
